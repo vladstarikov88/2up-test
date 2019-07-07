@@ -1,6 +1,6 @@
 export const headers = [
   {
-    text: 'Наименование',
+    text: 'Название',
     value: 'title',
   },
   {
