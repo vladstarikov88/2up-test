@@ -24,7 +24,7 @@
               <v-text-field 
                 label="Кол-во *"
                 v-model="amount"
-                v-validate="'required'"
+                v-validate="'required|numeric'"
                 data-vv-name="amount"
                 :error-messages="errors.collect('amount')"
               />
@@ -33,7 +33,7 @@
               <v-text-field 
                 label="Цена *"
                 v-model="price"
-                v-validate="'required'"
+                v-validate="'required|numeric'"
                 data-vv-name="price"
                 :error-messages="errors.collect('price')"
               />
@@ -104,10 +104,18 @@ export default {
       this.$emit('input', false)
     },
     addNewProduct() {
-      const newProduct = {
+      const id = new Uint32Array(1);
+      window.crypto.getRandomValues(id);
 
+      const newProduct = {
+        id: id[0],
+        title: this.itemTitle,
+        amount: this.amount,
+        price: this.price,
+        type: this.type
       }
 
+      /* Добавить текст на ошибку на ввод строки вместо числа */
       this.$validator
         .validateAll()
         .then(res => {

@@ -14,7 +14,7 @@
             Создать
           </v-btn>
         </template>
-        <v-data-table 
+        <product-table 
           :headers="headers"
           :items="items"
         />
@@ -33,10 +33,12 @@ import { mapActions, mapGetters } from 'vuex';
 import { headers } from '@/assets/tableData'
 import TableWrapper from '@/components/TableWrapper'
 import AddItemModal from './AddItemModal'
+import ProductTable from './ProductTable'
 export default {
   components: {
     TableWrapper,
-    AddItemModal
+    AddItemModal,
+    ProductTable,
   },
   data() {
     return {

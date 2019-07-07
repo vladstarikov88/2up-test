@@ -1,11 +1,19 @@
-const required = () => 'Поле является обязательным';
-// const numeric = () => 'Значение должно быть числом';
+const required = () => '';
+const numeric = () => 'Значение должно быть числом';
+
+export const props = [
+  'price',
+  'title',
+  'amount',
+  'type',
+]
 
 export const createDictionary = props => {
   let dictionary = {
     ru: {
-      custom: {
-
+      custom: { },
+      messages: {
+        price: numeric()
       }
     }
   }
@@ -16,24 +24,7 @@ export const createDictionary = props => {
     }
   })
 
-
-
   return dictionary
 }
-
-export const props = [
-  'name',
-  'surname',
-  'login',
-  'password',
-  'role',
-  'number',
-  'type',
-  'machine',
-  'executor',
-  'deadline',
-  'serialNumber',
-  'location',
-]
 
 export default { createDictionary, props }
