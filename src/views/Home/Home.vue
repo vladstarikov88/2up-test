@@ -17,6 +17,7 @@
         <product-table 
           :headers="headers"
           :items="items"
+          @delete-product="deleteProductById"
         />
       </table-wrapper>
     </v-flex>
@@ -50,10 +51,10 @@ export default {
     ...mapGetters('table', ['items'])
   },
   methods: {
-    ...mapActions('table', ['addNewProduct']),
+    ...mapActions('table', ['addNewProduct', 'deleteProductById']),
     openModalToAddNewProduct() {
       this.dialog = true;
-    }
+    },
   }
 }
 </script>

@@ -11,6 +11,13 @@ const data = {
     },
     getProductTypes(state, payload) {
       state.types = payload
+    },
+    deleteProductById(state, payload) {
+      const index = state.tableProducts.findIndex(product => {
+        return product.id === payload
+      })
+
+      state.tableProducts.splice(index, 1)
     }
   },
   actions: {
@@ -22,15 +29,22 @@ const data = {
       /* but I'll show you simple example */
       const payload = [
         {
-          text: 'Новый',
-          value: 'new'
+          text: 'Продажа',
+          value: 'sale'
         },
         {
-          text: 'Активный',
-          value: 'active'
+          text: 'Покупка',
+          value: 'purchase'
+        },
+        {
+          text: 'Обмен',
+          value: 'swap'
         },
       ]
       commit('getProductTypes', payload)
+    },
+    deleteProductById({commit}, payload) {
+      commit('deleteProductById', payload)
     }
   },
   getters: {

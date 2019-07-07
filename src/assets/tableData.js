@@ -1,5 +1,10 @@
 export const headers = [
   {
+    text: 'ID',
+    value: 'id',
+    sortable: false,
+  },
+  {
     text: 'Название',
     value: 'title',
   },
@@ -14,6 +19,12 @@ export const headers = [
   {
     text: 'Статус',
     value: 'status',
+    sortable: false,
+  },
+  {
+    text: 'Действия',
+    value: 'actions',
+    sortable: false,
   }
 ]
 

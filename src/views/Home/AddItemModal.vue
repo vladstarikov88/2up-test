@@ -72,6 +72,7 @@
 
 <script>
 import { mapState, mapActions } from 'vuex';
+import { genetareId } from '@/assets/helpers'
 export default {
   model: {
     prop: 'dialog',
@@ -104,15 +105,17 @@ export default {
       this.$emit('input', false)
     },
     addNewProduct() {
-      const id = new Uint32Array(1);
-      window.crypto.getRandomValues(id);
+      const id = genetareId()
+      const type = this.types.find(type => {
+        return type.value === this.type
+      })
 
       const newProduct = {
         id: id[0],
         title: this.itemTitle,
         amount: this.amount,
         price: this.price,
-        type: this.type
+        type: type
       }
 
       /* Добавить текст на ошибку на ввод строки вместо числа */
