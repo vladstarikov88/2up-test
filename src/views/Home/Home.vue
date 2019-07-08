@@ -3,7 +3,7 @@
     align-center 
     justify-center
   >
-    <v-flex md6 sm8 xs12>
+    <v-flex md8 sm10 xs12>
       <table-wrapper>
         <template v-slot:actions>
           <v-btn

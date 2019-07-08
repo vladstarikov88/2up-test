@@ -9,16 +9,16 @@ export const headers = [
     value: 'title',
   },
   {
-    text: 'Кол-во',
-    value: 'amount',
+    text: 'Дата создания',
+    value: 'creationDate'
   },
   {
     text: 'Цена',
     value: 'price',
   },
   {
-    text: 'Статус',
-    value: 'status',
+    text: 'Тип',
+    value: 'type',
     sortable: false,
   },
   {

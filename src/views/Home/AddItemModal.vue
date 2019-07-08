@@ -1,17 +1,18 @@
 <template>
   <v-dialog
     v-bind:value="dialog"
+    lazy
     @input="change"
     max-width="700px"
   >
     <v-card>
       <v-card-title>
-        <h3 class="subtitle">{{ title }}</h3>
+        <h2 class="subtitle">{{ title }}</h2>
       </v-card-title>
-      <v-card-text>
+      <v-card-text class="card-text">
         <v-container grid-list-lg>
           <v-layout row wrap>
-            <v-flex sm6 xs12>
+            <v-flex sm4 xs12>
               <v-text-field 
                 label="Название *"
                 v-model="itemTitle"
@@ -20,16 +21,7 @@
                 :error-messages="errors.collect('title')"
               />
             </v-flex>
-            <v-flex sm6 xs12>
-              <v-text-field 
-                label="Кол-во *"
-                v-model="amount"
-                v-validate="'required|numeric'"
-                data-vv-name="amount"
-                :error-messages="errors.collect('amount')"
-              />
-            </v-flex>
-            <v-flex sm6 xs12>
+            <v-flex sm4 xs12>
               <v-text-field 
                 label="Цена *"
                 v-model="price"
@@ -38,7 +30,7 @@
                 :error-messages="errors.collect('price')"
               />
             </v-flex>
-            <v-flex sm6 xs12>
+            <v-flex sm4 xs12>
               <v-select
                 flat
                 label="Тип *"
@@ -71,6 +63,7 @@
 </template>
 
 <script>
+import dayjs from 'dayjs'
 import { mapState, mapActions } from 'vuex';
 import { genetareId } from '@/assets/helpers'
 export default {
@@ -84,10 +77,9 @@ export default {
   },
   data() {
     return {
-      itemTitle: '',
-      amount: null,
+      itemTitle: null,
       price: null,
-      type: null
+      type: null,
     }
   },
   computed: {
@@ -110,13 +102,15 @@ export default {
         return type.value === this.type
       })
 
+      const creationDate = dayjs().format('DD-MM-YYYY hh:mm')
+
       const newProduct = {
-        id: id[0],
+        id,
         title: this.itemTitle,
-        amount: this.amount,
         price: this.price,
-        type: type
-      }
+        type,
+        creationDate
+      };
 
       /* Добавить текст на ошибку на ввод строки вместо числа */
       this.$validator
@@ -132,6 +126,10 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang="scss" scoped>
+.card-text {
+  /deep/ .container {
+    padding: 0;
+  }
+}
 </style>
