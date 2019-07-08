@@ -22,21 +22,11 @@
           />
         </td>
       </template>
-      <!-- <template v-slot:pageText="props">
-        Товаров {{ props.pageStart }} - {{ props.pageStop }} из {{ props.itemsLength }}
-      </template> -->
     </v-data-table>
-    <!-- <v-layout
-      align-center
-      justify-center
-    >
-      <v-flex> -->
-        <v-pagination 
-          v-model="pagination.page" 
-          :length="pages"
-        />
-      <!-- </v-flex>
-    </v-layout> -->
+    <v-pagination 
+      v-model="pagination.page" 
+      :length="pages"
+    />
   </div>
 </template>
 
@@ -53,20 +43,32 @@ export default {
   data() {
     return {
       pagination: {},
+      pages: null,
     }
   },
-  computed: {
-    pages () {
-      if (this.pagination.rowsPerPage == null ||
-        this.pagination.totalItems == null
-      ) return 0
-
-      return Math.ceil(this.pagination.totalItems / this.pagination.rowsPerPage)
+  watch: {
+    items(val) {
+      this.pagination.totalItems = val.length
+      this.countPages()
     }
+  },
+  mounted() {
+    this.countPages()
   },
   methods: {
     deleteProduct(productId) {
       this.$emit('delete-product', productId)
+    },
+    countPages() {
+      if (
+        this.pagination.rowsPerPage == null ||
+        this.pagination.totalItems == null
+      ) {
+        this.pages = 0
+      }
+      
+      const pages = this.pagination.totalItems / this.pagination.rowsPerPage;
+      this.pages = Math.ceil(pages)
     }
   }
 }

@@ -17,6 +17,7 @@ const data = {
         return product.id === payload
       })
 
+
       state.tableProducts.splice(index, 1)
     }
   },

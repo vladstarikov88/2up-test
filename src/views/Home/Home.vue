@@ -13,11 +13,17 @@
           >
             Создать
           </v-btn>
+          <v-btn
+            dark
+            color="error"
+          >
+            Удалить
+          </v-btn>
         </template>
         <product-table 
           :headers="headers"
           :items="items"
-          @delete-product="deleteProductById"
+          @delete-product="openModalToDelete"
         />
       </table-wrapper>
     </v-flex>
@@ -25,6 +31,11 @@
       v-model="dialog"
       title="Добавить запись в таблицу"
       @addNewProduct="addNewProduct"
+    />
+    <modal-to-delete 
+      v-model="dialogDelete"
+      title="Удалить?"
+      @delete="deleteProductById(deletedItem)"
     />
   </v-layout>
 </template>
@@ -34,17 +45,21 @@ import { mapActions, mapGetters } from 'vuex';
 import { headers } from '@/assets/tableData'
 import TableWrapper from '@/components/TableWrapper'
 import AddItemModal from './AddItemModal'
+import ModalToDelete from './ModalToDelete'
 import ProductTable from './ProductTable'
 export default {
   components: {
     TableWrapper,
     AddItemModal,
+    ModalToDelete,
     ProductTable,
   },
   data() {
     return {
       headers: headers,
       dialog: false,
+      dialogDelete: false,
+      deletedItem: null,
     }
   },
   computed: {
@@ -55,6 +70,10 @@ export default {
     openModalToAddNewProduct() {
       this.dialog = true;
     },
+    openModalToDelete(val) {
+      this.deletedItem = val
+      this.dialogDelete = true
+    }
   }
 }
 </script>
