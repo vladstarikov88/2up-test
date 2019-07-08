@@ -10,7 +10,8 @@ export const headers = [
   },
   {
     text: 'Дата создания',
-    value: 'creationDate'
+    value: 'creationDate',
+    sortable: false,
   },
   {
     text: 'Цена',

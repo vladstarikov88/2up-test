@@ -5,7 +5,9 @@
       :items="items"
       :pagination.sync="pagination"
       hide-actions
+      disable-initial-sort
       rows-per-page-text="Записей на странице"
+      :custom-sort="sortItems"
     >
       <template v-slot:items="props">
         <td>{{ props.item.id }}</td>
@@ -69,7 +71,30 @@ export default {
       
       const pages = this.pagination.totalItems / this.pagination.rowsPerPage;
       this.pages = Math.ceil(pages)
-    }
+    },
+    sortItems(items, index, isDesc) {
+      items.sort((a, b) => {
+        if (index === "title") {
+          if (!isDesc) {
+            console.log(a[index], b[index])
+            return a[index] < b[index] ? -1 : 1;
+          } else {
+            return b[index] - a[index] ? -1 : 1
+          }
+          return 0
+        }
+
+        if (index === "price") {
+          if (!isDesc) {
+            return a[index] - b[index];
+          } else {
+            console.log('+')
+            return b[index] - a[index]
+          }
+        }
+      });
+      return items;
+    },
   }
 }
 </script>
