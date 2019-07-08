@@ -3,7 +3,7 @@
     align-center 
     justify-center
   >
-    <v-flex md8 sm10 xs12>
+    <v-flex md10 sm10 xs12>
       <table-wrapper>
         <template v-slot:actions>
           <v-btn
@@ -19,10 +19,19 @@
           >
             Удалить
           </v-btn>
+          <v-btn>
+            Прочитанные
+          </v-btn>
+          <v-btn>
+            Непрочитанные
+          </v-btn>
+          <search-field 
+            @filter-data="filterData"
+          />
         </template>
         <product-table 
           :headers="headers"
-          :items="items"
+          :items="filteredItems"
           @delete-product="openModalToDelete"
         />
       </table-wrapper>
@@ -44,6 +53,7 @@
 import { mapActions, mapGetters } from 'vuex';
 import { headers } from '@/assets/tableData'
 import TableWrapper from '@/components/TableWrapper'
+import SearchField from '@/components/SearchField'
 import AddItemModal from './AddItemModal'
 import ModalToDelete from './ModalToDelete'
 import ProductTable from './ProductTable'
@@ -53,6 +63,7 @@ export default {
     AddItemModal,
     ModalToDelete,
     ProductTable,
+    SearchField,
   },
   data() {
     return {
@@ -60,10 +71,19 @@ export default {
       dialog: false,
       dialogDelete: false,
       deletedItem: null,
+      filteredItems: [],
     }
   },
   computed: {
     ...mapGetters('table', ['items'])
+  },
+  watch: {
+    items(val) {
+      this.filterData('')
+    }
+  },
+  mounted() {
+    this.filterData('')
   },
   methods: {
     ...mapActions('table', ['addNewProduct', 'deleteProductById']),
@@ -73,6 +93,11 @@ export default {
     openModalToDelete(val) {
       this.deletedItem = val
       this.dialogDelete = true
+    },
+    filterData(val) {
+      this.filteredItems = this.items.filter(item => {
+        return item.title.indexOf(val) > -1
+      })
     }
   }
 }
